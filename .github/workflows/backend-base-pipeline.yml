@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Copy files
-        run: cp -r . /adda
+        run: ls -r -al
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
