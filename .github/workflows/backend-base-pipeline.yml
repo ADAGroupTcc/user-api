@@ -26,5 +26,5 @@ jobs:
       - name: Render Deployment
         uses: sws2apps/render-deployment@v1.6.0
         with:
-          serviceId: ${{ secrets.RENDER_QA_SERVICE_ID }}
-          apiKey: ${{ secrets.RENDER_QA_API_KEY }}
+          serviceId: ${{ secrets.RENDER_HOM_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_HOM_API_KEY }}

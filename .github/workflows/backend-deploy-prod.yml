@@ -1,0 +1,15 @@
+name: CD
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Render Deployment
+        uses: sws2apps/render-deployment@v1.6.0
+        with:
+          serviceId: ${{ secrets.RENDER_PRD_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_PRD_API_KEY }}
