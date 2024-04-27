@@ -16,10 +16,10 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies and build
-        run: | 
-        ls -l
-        bun install
-        bun run build
+        run: |
+          ls -l
+          bun install
+          bun run build
 
       - name: Tests
         run: bun run test --passWithNoTests
