@@ -17,8 +17,8 @@ jobs:
 
       - name: Install dependencies and build
         run: | 
-        bun install
-        bun run build
+          bun install
+          bun run build
 
       - name: Tests
         run: bun run test --passWithNoTests
