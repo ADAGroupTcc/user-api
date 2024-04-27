@@ -10,4 +10,4 @@ jobs:
     needs: build
     steps:
       - name: Render Deployment
-        run: curl ${{ secrets.RENDER_DEPLOYMENT_URL }}
+        run: curl ${{ secrets.RENDER_DEPLOYMENT_PRD_URL }}
