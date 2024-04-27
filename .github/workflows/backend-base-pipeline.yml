@@ -10,14 +10,18 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Copy files
+        run: cp -r . /adda
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
+          workspace: /adda
           bun-version: latest
 
       - name: Install dependencies and build
         run: |
-          cp . .
+          ls -l
           bun install
           bun run build
 
