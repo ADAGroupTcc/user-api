@@ -10,13 +10,16 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
 
       - name: Install dependencies and build
-        run: | 
+        run: |
           bun install
           bun run build
 
@@ -24,7 +27,4 @@ jobs:
         run: bun run test --passWithNoTests
 
       - name: Render Deployment
-        uses: sws2apps/render-deployment@v1.6.0
-        with:
-          serviceId: ${{ secrets.RENDER_HOM_SERVICE_ID }}
-          apiKey: ${{ secrets.RENDER_HOM_API_KEY }}
+        run: curl https://api.render.com/deploy/srv-com87c0l6cac73d379lg?key=CYGszKeJAqA
