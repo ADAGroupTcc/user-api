@@ -2,9 +2,7 @@ name: CD
 
 on:
   pull_request:
-    branches: ['qa']
-  release:
-    types: [published]
+    branches: ['main']
 
 jobs:
   build-and-deploy:
@@ -19,9 +17,7 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies and build
-        run: |
-          bun install
-          bun run build
+        run: bun install
 
       - name: Tests
         run: bun run test --passWithNoTests
