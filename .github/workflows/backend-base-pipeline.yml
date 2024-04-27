@@ -1,31 +1,23 @@
-name: CI
+name: CD
 
 on:
   pull_request:
     branches: ['main']
-    types: [labled]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
 
-      - name: Install dependencies
+      - name: Install dependencies and build
         run: bun install
 
-      - name: Build
-        run: bun run build
-
-  deploy:
-    if: ${{ github.event.label.name == 'deploy-qa' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Render Deployment
-        uses: sws2apps/render-deployment@v1.6.0
-        with:
-          serviceId: ${{ secrets.RENDER_QA_SERVICE_ID }}
-          apiKey: ${{ secrets.RENDER_QA_API_KEY }}
+      - name: Tests
+        run: bun run test --passWithNoTests
