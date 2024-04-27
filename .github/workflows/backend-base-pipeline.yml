@@ -26,8 +26,12 @@ jobs:
       - name: Tests
         run: bun run test --passWithNoTests
 
-      - name: Render Deployment
-        uses: sws2apps/render-deployment@v1.6.0
+      - name: Render Deploy Action
+        # You may pin to the exact commit or the version.
+        # uses: johnbeynon/render-deploy-action@a0588f9aca995a15d69a72cb2bfbf37c12e5b540
+        uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          serviceId: srv-com87c0l6cac73d379lg
-          apiKey: CYGszKeJAqA
+          # ID of the service to deploy
+          service-id: srv-com87c0l6cac73d379lg
+          # A Render API key
+          api-key: CYGszKeJAqA
