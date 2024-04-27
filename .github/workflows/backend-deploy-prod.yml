@@ -10,4 +10,4 @@ jobs:
     needs: build
     steps:
       - name: Render Deployment
-        run: curl https://api.render.com/deploy/srv-com87c0l6cac73d379lg?key=CYGszKeJAqA
+        run: curl ${{ secrets.RENDER_DEPLOYMENT_URL }}

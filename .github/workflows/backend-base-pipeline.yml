@@ -5,7 +5,7 @@ on:
     branches: ['main']
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,6 +21,3 @@ jobs:
 
       - name: Tests
         run: bun run test --passWithNoTests
-
-      - name: Render Deployment
-        run: curl https://api.render.com/deploy/srv-com87c0l6cac73d379lg?key=CYGszKeJAqA
