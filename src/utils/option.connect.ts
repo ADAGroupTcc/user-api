@@ -2,7 +2,7 @@ import { MongooseModuleOptions } from "@nestjs/mongoose"
 import { ServerApiVersion } from "mongodb"
 
 export const localDbOptions: MongooseModuleOptions = {
-  retryAttempts: 1,
+  retryAttempts: Number(process.env.RETRY_ATTEMPTS),
   retryDelay: Number(process.env.RETRY_DELAY),
 }
 export const serverDbOptions: MongooseModuleOptions = {

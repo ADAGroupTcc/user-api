@@ -23,6 +23,9 @@ export class User {
   lastName: string
 
   @Prop()
+  description: string
+
+  @Prop()
   nickname: string
 
   @Prop({
@@ -35,12 +38,6 @@ export class User {
     required: true,
     unique: true,
   })
-  rg: number
-
-  @Prop({
-    required: true,
-    unique: true,
-  })
   cpf: number
 
   @Prop({
@@ -48,6 +45,21 @@ export class User {
     min: 3,
   })
   categories: string[]
+
+  @Prop({
+    default: new Date()
+  })
+  createdAt: Date
+
+  @Prop({
+    default: new Date()
+  })
+  updatedAt: Date
+
+  @Prop({
+    default: false
+  })
+  isDenunciated: boolean
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
