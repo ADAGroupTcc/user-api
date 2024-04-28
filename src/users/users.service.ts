@@ -33,6 +33,7 @@ export class UsersService {
 
   async update(cpf: string, user: UserPatchDto): Promise<User> {
     const userUpdated = await this.userModel.findOneAndUpdate({ cpf: cpf }, user, { new: true })
+    userUpdated.updatedAt = new Date()
     if (!userUpdated)
       throw new NotFoundException('User not found')
     return userUpdated

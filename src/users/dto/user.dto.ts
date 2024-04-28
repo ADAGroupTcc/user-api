@@ -11,17 +11,15 @@ export class UserDto {
 
   @IsString({ message: 'nickname must be a string' })
   @IsOptional()
-  nickname: string
+  nickname?: string
+
+  @IsString({ message: 'description must be a string' })
+  @IsOptional()
+  description?: string
 
   @IsEmail()
   @IsNotEmpty({ message: 'email is required' })
   email: string
-
-  @IsNotEmpty({ message: 'rg is required' })
-  @MinLength(9)
-  @MaxLength(9)
-  @IsNumberString()
-  rg: number
 
   @IsNotEmpty({ message: 'cpf is required' })
   @MinLength(11)
@@ -47,6 +45,10 @@ export class UserPatchDto {
   @IsString({ message: 'nickname must be a string' })
   @IsOptional()
   nickname?: string
+
+  @IsString({ message: 'description must be a string' })
+  @IsOptional()
+  description?: string
 
   @IsEmail({}, { message: 'email must be a valid email' })
   @IsOptional()
