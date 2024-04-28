@@ -38,10 +38,7 @@ export class UsersService {
     return userUpdated
   }
 
-  async delete(cpf: number): Promise<User> {
-    const userDeleted = await this.userModel.findOneAndDelete({ cpf });
-    if (!userDeleted)
-      throw new BadRequestException('User not found')
-    return userDeleted
+  async delete(cpf: number): Promise<void> {
+    await this.userModel.findOneAndDelete({ cpf });
   }
 }

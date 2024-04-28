@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
 import { UserDto, UserPatchDto } from './dto';
 import { UsersService } from './users.service';
 
@@ -22,7 +22,7 @@ export class UsersController {
     var users = await this.userService.list(cpf, limit, page);
     return {
       users,
-      next: page
+      next: users.length <= limit ? 0 : page + 1,
     }
   }
 
@@ -36,6 +36,7 @@ export class UsersController {
   }
 
   @Delete('/:cpf')
+  @HttpCode(204)
   async deleteUsers(@Param('cpf') cpf: string) {
     if (!cpf) throw new BadRequestException('CPF is required');
     if (isNaN(Number(cpf))) throw new BadRequestException('CPF must be a number');
