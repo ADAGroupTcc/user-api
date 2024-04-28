@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Error, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { User } from 'src/schemas/users.schema';
 import { UserDto } from './dto';
 
@@ -22,5 +22,12 @@ export class UsersService {
       else
         throw new InternalServerErrorException(err.message)
     }
+  }
+
+  async list(cpf: string, limit: number, page: number): Promise<User[]> {
+    if (cpf) {
+      return await this.userModel.find({ cpf }).exec()
+    }
+    return await this.userModel.find().limit(limit).skip(limit * (page - 1)).exec()
   }
 }
