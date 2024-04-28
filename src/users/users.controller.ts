@@ -12,10 +12,9 @@ export class UsersController {
   }
   @Patch('/:cpf')
   async updateUsers(@Body() user: UserPatchDto, @Param('cpf') cpf: string) {
-    if (!cpf)
-      throw new BadRequestException('cpf is required');
-    if (cpf.length !== 11)
-      throw new BadRequestException('cpf must have 11 characters');
+    if (!cpf) throw new BadRequestException('CPF is required');
+    if (isNaN(Number(cpf))) throw new BadRequestException('CPF must be a number');
+    if (cpf.length !== 11) throw new BadRequestException('CPF must have 11 digits');
 
     return await this.userService.update(cpf, user);
   }
