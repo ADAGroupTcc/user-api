@@ -47,7 +47,7 @@ export class User {
     required: true,
     min: 3,
   })
-  categorias: string[]
+  categories: string[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
