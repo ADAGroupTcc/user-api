@@ -10,6 +10,22 @@ export class UsersController {
   async createUsers(@Body() user: UserDto) {
     return await this.userService.create(user);
   }
+
+  @Get()
+  async listUsers(@Query('cpf') cpf: string, @Query('limit') limit: number, @Query('page') page: number) {
+    if (!limit) {
+      limit = 10;
+    }
+    if (!page) {
+      page = 1;
+    }
+    var users = await this.userService.list(cpf, limit, page);
+    return {
+      users,
+      next: page
+    }
+  }
+
   @Patch('/:cpf')
   async updateUsers(@Body() user: UserPatchDto, @Param('cpf') cpf: string) {
     if (!cpf) throw new BadRequestException('CPF is required');
@@ -18,4 +34,5 @@ export class UsersController {
 
     return await this.userService.update(cpf, user);
   }
+
 }
