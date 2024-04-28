@@ -1,8 +1,8 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Error, Model } from 'mongoose';
 import { User } from 'src/schemas/users.schema';
-import { UserDto } from './dto';
+import { UserDto, UserPatchDto } from './dto';
 
 @Injectable()
 export class UsersService {
@@ -23,4 +23,21 @@ export class UsersService {
         throw new InternalServerErrorException(err.message)
     }
   }
+<<<<<<< Updated upstream
+=======
+
+  async list(cpf: string, limit: number, page: number): Promise<User[]> {
+    if (cpf) {
+      return await this.userModel.find({ cpf }).exec()
+    }
+    return await this.userModel.find().limit(limit).skip(limit * (page - 1)).exec()
+  }
+
+  async update(cpf: string, user: UserPatchDto): Promise<User> {
+    const userUpdated = await this.userModel.findOneAndUpdate({ cpf: cpf }, user, { new: true })
+    if (!userUpdated)
+      throw new NotFoundException('User not found')
+    return userUpdated
+  }
+>>>>>>> Stashed changes
 }
