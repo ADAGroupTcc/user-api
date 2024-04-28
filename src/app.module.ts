@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ServerApiVersion } from 'mongodb';
 import { HealthController } from './health/health.controller';
 import { UsersModule } from './users/users.module';
+import { localDbOptions, serverDbOptions } from './utils/option.connect';
 
 @Module({
   imports: [
@@ -11,16 +11,9 @@ import { UsersModule } from './users/users.module';
       isGlobal: true,
     }),
     UsersModule,
-    MongooseModule.forRoot(process.env.DATABASE_URL, {
-      authMechanism: 'MONGODB-X509',
-      tls: true,
-      cert: process.env.CERT,
-      key: process.env.KEY,
-      serverApi: ServerApiVersion.v1,
-      retryAttempts: Number(process.env.RETRY_ATTEMPTS),
-      retryDelay: Number(process.env.RETRY_DELAY),
-    }),
+    MongooseModule.forRoot(process.env.DATABASE_URL, process.env.IS_LOCAL_DATABASE ? localDbOptions : serverDbOptions),
   ],
   controllers: [HealthController],
 })
-export class AppModule { }
+export class AppModule {
+}

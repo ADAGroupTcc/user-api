@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Expose } from 'class-transformer';
+import { ObjectId } from 'mongodb';
 import * as mongoose from "mongoose";
 
 export type UserDocument = mongoose.HydratedDocument<User>;
@@ -41,6 +42,12 @@ export class User {
     unique: true,
   })
   cpf: number
+
+  @Prop({
+    required: true,
+    min: 3,
+  })
+  categorias: string[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
