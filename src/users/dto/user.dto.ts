@@ -10,6 +10,7 @@ export class UserDto {
   lastName: string
 
   @IsString({ message: 'nickname must be a string' })
+  @IsOptional()
   nickname: string
 
   @IsEmail()
