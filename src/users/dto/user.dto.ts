@@ -1,4 +1,4 @@
-import { ArrayMinSize, IsArray, IsEmail, IsNotEmpty, IsNumberString, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { ArrayMinSize, IsArray, IsBoolean, IsEmail, IsNotEmpty, IsNumberString, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
 
 export class UserDto {
   @IsString({ message: 'first_name must be a string' })
@@ -31,6 +31,10 @@ export class UserDto {
   @ArrayMinSize(3, { message: 'categories must have at least 4 items' })
   @IsArray({ message: 'categories must be an array' })
   categories: string[]
+
+  @IsBoolean({ message: "isDenunciated must be a boolean" })
+  @IsOptional()
+  isDenunciated?: boolean
 }
 
 export class UserPatchDto {
@@ -58,4 +62,8 @@ export class UserPatchDto {
   @IsArray({ message: 'categories must be an array' })
   @IsOptional()
   categories?: string[]
+
+  @IsBoolean({ message: "isDenunciated must be a boolean" })
+  @IsOptional()
+  isDenunciated?: boolean
 }
