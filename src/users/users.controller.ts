@@ -12,17 +12,19 @@ export class UsersController {
   }
 
   @Get()
-  async listUsers(@Query('cpf') cpf: string, @Query('limit') limit: number, @Query('page') page: number) {
-    if (!limit) {
+  async listUsers(@Query('cpf') cpf: string, @Query('limit') limit: number, @Query('next') next: number) {
+    if (cpf && isNaN(Number(cpf))) throw new BadRequestException('CPF must be a number');
+    if (cpf && cpf.length !== 11) throw new BadRequestException('CPF must have 11 digits');
+    if (!limit || limit < 1 || isNaN(Number(limit))) {
       limit = 10;
     }
-    if (!page) {
-      page = 1;
+    if (!next || next < 1 || isNaN(Number(next))) {
+      next = 1;
     }
-    var users = await this.userService.list(cpf, limit, page);
+    var users = await this.userService.list(cpf, limit, next);
     return {
       users,
-      next: users.length <= limit ? 0 : page + 1,
+      next: users.length == 0 || users.length < limit ? 0 : Number(next) + 1,
     }
   }
 
