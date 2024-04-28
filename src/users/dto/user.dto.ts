@@ -1,4 +1,4 @@
-import { IsEmail, IsEmpty, IsNotEmpty, IsNumberString, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
+import { ArrayMinSize, IsArray, IsEmail, IsNotEmpty, IsNumberString, IsString, MaxLength, Min, MinLength } from "class-validator";
 
 export class UserDto {
   @IsString({ message: 'first_name must be a string' })
@@ -28,4 +28,8 @@ export class UserDto {
   @IsNumberString()
   cpf: number
 
+  @IsNotEmpty({ message: 'categories is required' })
+  @ArrayMinSize(3, { message: 'categories must have at least 4 items' })
+  @IsArray({ message: 'categories must be an array' })
+  categories: string[]
 }
