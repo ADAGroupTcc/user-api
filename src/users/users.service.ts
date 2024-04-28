@@ -17,7 +17,7 @@ export class UsersService {
       const userCreated = await createdUser.save();
       return userCreated
     } catch (err: any) {
-      if (err instanceof Error.ValidationError)
+      if (err.code === 11000)
         throw new BadRequestException(err.message)
       else
         throw new InternalServerErrorException(err.message)
