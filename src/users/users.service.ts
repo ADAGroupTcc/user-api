@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/schemas/users.schema';
+import { Categories, User } from 'src/schemas';
 import { UserDto, UserPatchDto } from './dto';
 
 @Injectable()
@@ -33,7 +33,7 @@ export class UsersService {
       return user
     }
     if (email) {
-      user = await this.userModel.find({ email }).exec()
+      user = await this.userModel.find({ email }).populate(Categories.name, {}, Categories.name).exec()
     }
     if (user.length > 0) {
       return user
