@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from "mongoose";
+import { Categories } from './category.schema';
 
 export type UserDocument = mongoose.HydratedDocument<User>;
 
@@ -40,10 +41,10 @@ export class User {
 
   @Prop({
     required: true,
-    type: [String],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'categories' }],
     min: 3,
   })
-  categories: string[]
+  categories: Categories[]
 
   @Prop({
     default: new Date()
