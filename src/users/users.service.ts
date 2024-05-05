@@ -41,6 +41,13 @@ export class UsersService {
     return await this.userModel.find().limit(limit).skip(limit * (page - 1)).exec()
   }
 
+  async get(id: string): Promise<User> {
+    const user = await this.userModel.findOne({ _id: id }).exec()
+    if (!user)
+      throw new NotFoundException('User not found')
+    return user
+  }
+
   async update(id: string, user: UserPatchDto): Promise<User> {
     const userUpdated = await this.userModel.findOneAndUpdate({ _id: id }, user, { new: true })
     if (!userUpdated)

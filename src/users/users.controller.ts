@@ -29,6 +29,12 @@ export class UsersController {
     }
   }
 
+  @Get('/:id')
+  async getUsers(@Param('id') id: string) {
+    if (!id) throw new BadRequestException('id is required');
+    return await this.userService.get(id);
+  }
+
   @Patch('/:id')
   async updateUsers(@Body() user: UserPatchDto, @Param('id') id: string) {
     if (!id) throw new BadRequestException('id is required');
