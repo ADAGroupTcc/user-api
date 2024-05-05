@@ -33,7 +33,7 @@ export class UsersService {
       return user
     }
     if (email) {
-      user = await this.userModel.find({ email }).populate(Categories.name, {}, Categories.name).exec()
+      user = await this.userModel.find({ email }).populate(`${process.env.DATABASENAME}.categories`).exec()
     }
     if (user) {
       return user
