@@ -29,13 +29,13 @@ export class UsersService {
     if (cpf) {
       user = await this.userModel.find({ cpf }).exec()
     }
-    if (user.length > 0) {
+    if (user) {
       return user
     }
     if (email) {
       user = await this.userModel.find({ email }).populate(Categories.name, {}, Categories.name).exec()
     }
-    if (user.length > 0) {
+    if (user) {
       return user
     }
     return await this.userModel.find().limit(limit).skip(limit * (page - 1)).exec()
