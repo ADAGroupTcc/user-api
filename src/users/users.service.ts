@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/schemas/users.schema';
+import { Categories, User } from 'src/schemas';
 import { UserDto, UserPatchDto } from './dto';
 
 @Injectable()
@@ -24,22 +24,39 @@ export class UsersService {
     }
   }
 
-  async list(cpf: string, limit: number, page: number): Promise<User[]> {
+  async list(cpf: string, email: string, limit: number, page: number): Promise<User[]> {
+    let user: User[]
     if (cpf) {
-      return await this.userModel.find({ cpf }).exec()
+      user = await this.userModel.find({ cpf }).exec()
+    }
+    if (user.length > 0) {
+      return user
+    }
+    if (email) {
+      user = await this.userModel.find({ email }).populate(Categories.name, {}, Categories.name).exec()
+    }
+    if (user.length > 0) {
+      return user
     }
     return await this.userModel.find().limit(limit).skip(limit * (page - 1)).exec()
   }
 
-  async update(cpf: string, user: UserPatchDto): Promise<User> {
-    const userUpdated = await this.userModel.findOneAndUpdate({ cpf: cpf }, user, { new: true })
-    userUpdated.updatedAt = new Date()
+  async get(id: string): Promise<User> {
+    const user = await this.userModel.findOne({ _id: id }).exec()
+    if (!user)
+      throw new NotFoundException('User not found')
+    return user
+  }
+
+  async update(id: string, user: UserPatchDto): Promise<User> {
+    const userUpdated = await this.userModel.findOneAndUpdate({ _id: id }, user, { new: true })
     if (!userUpdated)
       throw new NotFoundException('User not found')
+    userUpdated.updatedAt = new Date()
     return userUpdated
   }
 
-  async delete(cpf: number): Promise<void> {
-    await this.userModel.findOneAndDelete({ cpf });
+  async delete(id: string): Promise<void> {
+    await this.userModel.findOneAndDelete({ _id: id });
   }
 }
