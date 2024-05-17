@@ -40,7 +40,7 @@ export class User {
 
   @Prop({
     required: true,
-    type: [String],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'categories' }],
     min: 3,
   })
   categories: string[]
